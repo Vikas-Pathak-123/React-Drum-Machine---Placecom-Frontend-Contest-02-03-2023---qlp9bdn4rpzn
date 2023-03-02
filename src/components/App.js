@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/App.css"
 import Pads from "./Pads";
 
@@ -43,27 +43,36 @@ export const bank1 = {
 }
 
 
-function ControlScreen() {
+
+function ControlScreen({power,setPower,volume,setVolume}) {
+  const handlePowerChange= ()=>{
+    setPower(!power);
+  }
+  const handleVolumeChange =(e)=>{
+    setVolume(e.target.value);
+  }
   return (
     <div id='control-screen'>
       <label id='label-power'>
-        <input type='checkbox' id='power' />
-        <span className='checkmark'>Show Power of off here </span>
+        <input type='checkbox' id='power' checked={power} onChange={handlePowerChange}/>
+        <span className='checkmark'>{power ? "ON":"OFF"}</span>
       </label>
       <label id='label-volume'>
-        <input type='range'  id='volume' />
-        <span id='volume-display'>Volume : Show volume here </span>
+        <input type='range'  id='volume' min="0" max="1" step="0.01" value={volume} onChange={handleVolumeChange} />
+        <span id='volume-display'>Volume : {Math.round(volume*100)}%</span>
       </label>
     </div>
   )
 }
 
 function App() {
+  const [power,setPower] = useState(true);
+  const[volume,setVolume] = useState(0.5);
   return (
     <div id='drum-machine'>
       
-      <Pads/>
-      <ControlScreen  />
+      <Pads bank={bank1} power={power} volume={volume}/>
+      <ControlScreen  power={power} setPower={setPower} volume={volume} setVolume={setVolume}/>
     </div>
   );
 }
