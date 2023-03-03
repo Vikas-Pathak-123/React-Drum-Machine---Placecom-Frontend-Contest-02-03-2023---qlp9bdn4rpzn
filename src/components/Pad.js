@@ -1,7 +1,8 @@
 import React from "react";
 import { bank1 } from "./App";
 
-function Pad({ handleClick, power, backgroundStyle, element, id }) {
+function Pad({ handleClick, power, element, id }) {
+  const backgroundStyle = power ? "orange" : "gray";
   return (
     <button
       data-tag={id}
@@ -13,7 +14,11 @@ function Pad({ handleClick, power, backgroundStyle, element, id }) {
       style={{ background: `${backgroundStyle}` }}
     >
       {element}
-      <audio id={element} src={bank1[element].source} className="clip"></audio>
+      <audio
+        id={element}
+        src={bank1[element].source}
+        className="clip"
+      ></audio>
     </button>
   );
 }
